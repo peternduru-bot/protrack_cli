@@ -1,25 +1,30 @@
-# ProTrack-CLI: Project Workspace Engine
+# ProTrack-CLI: Production-Grade Infrastructure & Project Tracker
 
-ProTrack-CLI is a lightweight, terminal-based project management tool built to help software engineers break down massive, overwhelming applications into organized, manageable tasks. It acts as a smart digital checklist, automatically calculating real-time progress percentages and rendering active progress bars directly in the terminal console.
-
-## 🚀 Features
-* **Dynamic Progress Tracking:** Automatically calculates how close you are to completing a project based on completed tasks.
-* **Local State Serialization:** Stores user and workspace data safely on local disk storage via a structured JSON schema.
-* **Visual Dashboard Interface:** Uses rich-text table grids and functional tracking layout displays inside the command-line interface.
-* **Automated Logic Validation:** Built-in verification architecture running on Pytest to guarantee app performance run-time safety.
+Welcome to **ProTrack-CLI**, a terminal-based project management tool designed for developers and systems engineers. This application provides a lightweight environment layout management system to track environment layers, project clusters, and granular execution tasks with absolute zero mock structures.
 
 ---
 
-## 📂 Project Architecture & Layout
+## 🎯 What to Expect From This Project
 
-```text
-protrack_cli/
-│
-├── models.py         # Blueprint structures (User, Project, Task)
-├── storage.py        # Local JSON database load and save engines
-├── utils.py          # Helper functions and styling utilities
-├── main.py           # Application routing and entry point
-├── cli.py            # Terminal command argument handling
-├── test_app.py       # Automated testing test suite
-├── requirements.txt  # Python package dependencies
-└── db.json           # Active local state database file
+* **Dual Interface Control:** Switch between typing raw flags for fast execution or using arrow keys via a guided terminal UI.
+* **Persistent Local Storage:** All configuration mappings, deployment environments, and tasks sync instantly to a local database structure (`db.json`).
+* **DevOps Architecture Styling:** Workspaces are mapped using engineering principles like Cluster Identification Keys and Tier Categorization Layers.
+* **Real-Time Analytics Matrix:** High-performance dashboard view utilizing dynamic progress bar rendering and precise component ratio logging.
+
+---
+
+## 🧭 How to Navigate the Workspace
+
+The application handles routing automatically based on how you initialize it in your ThinkPad shell:
+
+1. **Direct CLI Layer (Using Flags):** Append arguments directly behind your file execution execution call to execute instant, single-run background database tasks.
+2. **Interactive UI Wizard (Using Arrow Keys):** Type `python main.py` with zero arguments. A beautiful selection matrix will open up. Use your **Up/Down arrow keys** to navigate selections, **Enter** to select options, and **Y / N** toggles to clear safety confirmations.
+
+---
+
+## 🛠️ Complete Command & Navigation Reference
+
+### 1. Account Initialization Configuration
+Before interacting with database storage files, you must configure your structural framework profile signature:
+```bash
+python main.py init --name "PJ Nduru" --email "peter.nduru@student.moringaschool.com" --role "Admin"

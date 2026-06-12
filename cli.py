@@ -27,10 +27,10 @@ def run_cli() -> None:
     # Command: admin-view
     subparsers.add_parser("admin-view", help="Render diagnostic system profiles (Admin authorization required).")
 
-    # Command: add-project
+    # Command: add-project (Upgraded to Cloud/Infra schema)
     proj_parser = subparsers.add_parser("add-project", help="Append a project container to the workspace.")
-    proj_parser.add_argument("--name", required=True, help="Title of the workspace container.")
-    proj_parser.add_argument("--desc", default="", help="Narrative detailing project boundaries.")
+    proj_parser.add_argument("--cluster-id", required=True, help="Target cluster name or unique infrastructure identifier.")
+    proj_parser.add_argument("--tier-level", required=True, help="Infrastructure tier layer setup (e.g., healthcare, finance, backend).")
 
     # Command: add-task
     task_parser = subparsers.add_parser("add-task", help="Append an executable checklist item to a project.")
@@ -42,6 +42,10 @@ def run_cli() -> None:
     toggle_parser = subparsers.add_parser("toggle-task", help="Invert the completion status of a target checklist item.")
     toggle_parser.add_argument("--project-id", required=True, help="Target project tracking identification code.")
     toggle_parser.add_argument("--task-id", required=True, help="Target task verification code.")
+
+    # Command: delete-project (Newly Registered DevOps Action)
+    delete_parser = subparsers.add_parser("delete-project", help="Decommission and remove an infrastructure cluster container.")
+    delete_parser.add_argument("--project-id", required=True, help="Target project/cluster identification code to remove.")
 
     # Execution Phase
     args = parser.parse_args()
@@ -69,10 +73,11 @@ def run_cli() -> None:
         display_admin_diagnostics(user)
 
     elif args.command == "add-project":
-        new_proj = Project(generate_id(), args.name, args.desc)
+        # Map the new DevOps cluster arguments cleanly into your existing Project model
+        new_proj = Project(generate_id(), args.cluster_id, args.tier_level)
         user.add_project(new_proj)
         if save_data(user):
-            console.print(f"[bold green]Success:[/bold green] Project '{args.name}' provisioned as ID: [cyan]{new_proj.id}[/cyan]\n")
+            console.print(f"[bold green]Success:[/bold green] Cluster container '{args.cluster_id}' provisioned under tier '[yellow]{args.tier_level}[/yellow]' as ID: [cyan]{new_proj.id}[/cyan]\n")
 
     elif args.command == "add-task":
         target_project = next((p for p in user.projects if p.id == args.project_id), None)
@@ -101,6 +106,16 @@ def run_cli() -> None:
             status_text = "[green]COMPLETED[/green]" if target_task.is_completed else "[yellow]PENDING[/yellow]"
             console.print(f"[bold green]Success:[/bold green] Task [cyan]{target_task.id}[/cyan] updated. Status is now {status_text}.\n")
             console.print(f"[bold cyan]Project Progress Update:[/bold cyan] {target_project.name} is now at [magenta]{target_project.progress}%[/magenta]\n")
+
+    elif args.command == "delete-project":
+        target_project = next((p for p in user.projects if p.id == args.project_id), None)
+        if not target_project:
+            console.print(f"[bold red]Execution Error:[/bold red] Cluster project target ID [yellow]{args.project_id}[/yellow] does not exist.\n")
+            sys.exit(1)
+        
+        user.projects.remove(target_project)
+        if save_data(user):
+            console.print(f"[bold green]Success:[/bold green] Cluster container [cyan]{args.project_id}[/cyan] successfully decommissioned and purged from storage mapping.\n")
 
     else:
         parser.print_help()
