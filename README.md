@@ -28,3 +28,11 @@ The application handles routing automatically based on how you initialize it in 
 Before interacting with database storage files, you must configure your structural framework profile signature:
 ```bash
 python main.py init --name "PJ Nduru" --email "peter.nduru@student.moringaschool.com" --role "Admin"
+
+
+
+
+# packages 
+click
+rich 
+pytest
